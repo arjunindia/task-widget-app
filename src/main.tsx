@@ -34,7 +34,9 @@ const theme = {
     primaryForeground: '#fff',
     secondary: '#3E3D3Ade',
     secondaryForeground: '#fff',
-    shadow: 'rgba(60, 64, 43, .2)'
+    shadow: 'rgba(60, 64, 43, .2)',
+    border: '#3c402b',
+    hover: '#3c402b44',
   },
 }
 

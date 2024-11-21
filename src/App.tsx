@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import styled from "styled-components"
 
+import WidgetWrapper from './components/WidgetWrapper'
+import WeatherWidget from './components/widgets/WeatherWidget'
+
 const Header = styled.header`
   height: 5em;
   background-color: ${(props) => props.theme.colors.primary};
@@ -10,6 +13,7 @@ const Header = styled.header`
 const Shell = styled.div`
   height: calc(100% - 5em);
   width: 100%;
+  display: flex;
 `
 
 
@@ -18,8 +22,16 @@ const Sidebar = styled.aside`
   width: 5em;
   background-color: ${(props) => props.theme.colors.secondary};
 `
-const Container = styled.main`
+const Container = styled.div`
   height: 100%;
+`
+const Content = styled.main`
+  height: 100%;
+  width: calc(100% - 9em);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 `
 
 function App() {
@@ -29,8 +41,16 @@ function App() {
       <Header />
       <Shell >
         <Sidebar />
+        <Content >
+          <WidgetWrapper>
+            <WeatherWidget />
+          </WidgetWrapper>
+          <WidgetWrapper>
+            <WeatherWidget />
+          </WidgetWrapper>
+        </Content>
       </Shell>
-    </Container>
+    </Container >
   )
 }
 
