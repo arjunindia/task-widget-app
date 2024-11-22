@@ -37,6 +37,9 @@ const theme = {
     shadow: 'rgba(60, 64, 43, .2)',
     border: '#3c402b',
     hover: '#3c402b44',
+    hoverSecondary: '#A4B55B',
+    background: '#c4e456',
+    danger: '#ff3333cc',
   },
 }
 

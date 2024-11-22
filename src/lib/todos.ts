@@ -1,53 +1,58 @@
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { useMemo } from "react"
 
-export type TodosResponse = Todo[]
+type TodosResponse = Todo[]
 
 export interface Todo {
-  userId: number
   id: number
   title: string
   completed: boolean
+  userId: number
 }
 
+
 const fetchTodos = async () => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos')
-  const data = await response.json()
+  const response = localStorage.getItem('todos')
+  if (response) {
+    return JSON.parse(response) as TodosResponse
+  }
+  const response2 = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=6')
+  const data = await response2.json()
+  localStorage.setItem('todos', JSON.stringify(data))
   return data as TodosResponse
 }
 const addTodo = async (title: string) => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ title }),
-  })
-  const data = await response.json()
-  return data as Todo
+  if (!title || title.trim() === '') return
+  let data = await fetchTodos()
+  const lastId = data[data.length - 1].id
+  data.push({ id: lastId + 1, title: title, completed: false } as Todo)
+  localStorage.setItem('todos', JSON.stringify(data))
+  mutate('todos', data)
+  return data as TodosResponse
 }
 
 const deleteTodo = async (id: number) => {
-  const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-    method: 'DELETE',
-  })
-  const data = await response.json()
-  return data as Todo
+  let data = await fetchTodos()
+  data = data.filter((todo) => todo.id !== id)
+  localStorage.setItem('todos', JSON.stringify(data))
+  mutate('todos', data)
+  return data as TodosResponse
 }
 
-const updateTodo = async (id: number, title: string) => {
-  const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ title }),
+const updateTodo = async (id: number, title: string, completed: boolean) => {
+  let data = await fetchTodos()
+  data = data.map((todo) => {
+    if (todo.id === id) {
+      return { ...todo, todo: title, completed }
+    }
+    return todo
   })
-  const data = await response.json()
-  return data as Todo
+  localStorage.setItem('todos', JSON.stringify(data))
+  mutate('todos', data)
+  return data as TodosResponse
 }
 
-export function useTodos() {
+function useTodos() {
   const result = useSWR<TodosResponse>(
     'todos',
     fetchTodos
@@ -55,3 +60,5 @@ export function useTodos() {
 
   return result
 }
+
+export { useTodos, addTodo, deleteTodo, updateTodo }
