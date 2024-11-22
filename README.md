@@ -1,50 +1,77 @@
-# React + TypeScript + Vite
+# Task Widget App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple task widget app that displays tasks and weather information.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Displays tasks and weather information
+- Responsive design
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To get started, follow these steps:
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the repository:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/arjunindia/task-widget-app.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
 ```
+
+3. Create a `.env` file in the root directory and add your OpenWeatherMap API key:
+
+```bash
+VITE_OMW_API_KEY=your_api_key
+```
+you can refer the .env.example file.
+to get your api key, you can refer this link: [https://home.openweathermap.org/api_keys](https://home.openweathermap.org/api_keys)
+
+4. Run the development server:
+
+```bash
+npm run dev
+```
+
+5. Open your browser and navigate to `http://localhost:5173/`.
+
+# Building for Production
+
+To build the application for production, follow these steps:
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create a `.env` file in the root directory and add your OpenWeatherMap API key:
+
+```bash
+VITE_OMW_API_KEY=your_api_key
+```
+you can refer the .env.example file.
+to get your api key, you can refer this link: [https://home.openweathermap.org/api_keys](https://home.openweathermap.org/api_keys)
+
+3. Build the application:
+
+```bash
+npm run build
+```
+
+4. The built application will be available in the `dist` directory.
+
+# Libraries Used
+
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Styled Components](https://styled-components.com/)
+- [SWR](https://swr.vercel.app/)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [Zustand](https://github.com/pmndrs/zustand)
+- [@phosphor-icons/react](https://github.com/phosphor-icons/phosphor-react)
