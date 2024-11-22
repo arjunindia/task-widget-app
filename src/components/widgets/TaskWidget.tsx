@@ -123,7 +123,7 @@ const ListItem = ({ id, title, completed }: { id: number, title: string, complet
 }
 
 export default function TaskWidget() {
-  const { data, isLoading } = useTodos()
+  const { data } = useTodos()
   const [newTodo, setNewTodo] = useState('')
   const handleAddTodo = () => {
     addTodo(newTodo)

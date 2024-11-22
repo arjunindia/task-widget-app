@@ -1,5 +1,4 @@
 import useSWR, { mutate } from 'swr'
-import { useMemo } from "react"
 
 type TodosResponse = Todo[]
 
