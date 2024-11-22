@@ -35,8 +35,16 @@ const IconWrapper = styled.div`
 const Wrapper = styled.div`
 display: flex;
 justify-content: center;
-gap: 5em;
+gap: 10em;
 align-items: center;
+@media (max-width: 900px) {
+  gap: 5em;
+}
+@media (max-width: 700px) {
+  flex-direction: column;
+  gap: 2em;
+  margin-bottom: 2em;
+}
  `
 const DataWrapper = styled.div`
   display: grid;
@@ -46,13 +54,21 @@ const DataWrapper = styled.div`
   align-items: center;
   justify-self: center;
   height: 100%;
+  gap: 1em;
 `
 const Data = styled.div`
   font-size: 1.2em;
   text-align: center;
-  border-bottom: 1px solid ${(props) => props.theme.colors.primary};
   box-shadow: 0 2px 0 0 ${(props) => props.theme.colors.shadow};
+  background-color: ${(props) => props.theme.colors.background};
+  border: 2px solid ${(props) => props.theme.colors.border};
+  border-radius: 0.5em;
   padding: 1em;
+  @media (max-width: 900px) {
+    font-size: 1em;
+    padding: 0.5em;
+    margin: 0;
+  }
 `
 
 
@@ -69,10 +85,10 @@ export default function WeatherWidget() {
       </IconWrapper>
       <DataWrapper>
 
-        <Data>Feels like {data?.main.feels_like}°C</Data>
-        <Data>Humidity: {data?.main.humidity}%</Data>
-        <Data>Wind: {data?.wind.speed} km/h</Data>
-        <Data>Pressure: {data?.main.pressure} hPa</Data>
+        <Data>Feels like <br /> <strong>{data?.main.feels_like}°C</strong></Data>
+        <Data>Humidity:<br /> <strong>{data?.main.humidity}%</strong></Data>
+        <Data>Wind speed:<br /> <strong>{data?.wind.speed} km/h</strong></Data>
+        <Data>Pressure:<br /> <strong>{data?.main.pressure} hPa</strong></Data>
       </DataWrapper>
     </Wrapper>
     }

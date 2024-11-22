@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { useLocation } from '../lib/location'
 import { useEffect, useRef, useState } from "react"
-import { MagnifyingGlass } from '@phosphor-icons/react'
 import useLocationStore from '../lib/stores/location'
 
 const LocationPickerStyled = styled.input`
@@ -11,6 +10,7 @@ const LocationPickerStyled = styled.input`
   border-radius: 0.25em;
   outline: none;
   font-size: 1.5em;
+  max-width: 100%;
 `
 const SearchList = styled.ul`
   list-style: none;
@@ -108,7 +108,6 @@ export default function LocationPicker() {
   const isSearchVisible = focused && !isLoading && data?.results && uniqueResults && data?.results.length > 0
   return <div>
     <LocationPickerStyled ref={ref} value={value} onChange={(e) => setValue(e.target.value)} />
-    <MagnifyingGlass size={20} style={{ color: '#3c402b', marginLeft: '0.5em' }} />
     {isSearchVisible && <SearchList ref={listRef} >
       {uniqueResults?.map((result, i) => (
         <SearchItem key={result.id} onClick={() => {
