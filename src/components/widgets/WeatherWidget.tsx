@@ -1,8 +1,9 @@
 import { useState } from "react"
 import styled from "styled-components"
 import { useWeather } from '../../lib/weather'
-
 import LocationPicker from '../LocationPicker'
+
+import useLocationStore from '../../lib/stores/location'
 
 const Title = styled.h1`
   font-size: 2em;
@@ -56,12 +57,12 @@ const Data = styled.div`
 
 
 export default function WeatherWidget() {
-  const [lat, setLat] = useState(0);
-  const [lon, setLon] = useState(0);
-  const { data, isLoading } = useWeather(lat, lon);
+  const { latitude, longitude } = useLocationStore((state) => state)
+  const { data, isLoading } = useWeather(latitude, longitude)
   return <div>
     <Title>Weather in</Title><LocationPicker />
-    <Wrapper>
+    {isLoading && <p>Fetching weather data...</p>}
+    {data && <Wrapper>
       <IconWrapper>
         <Icon src={`https://openweathermap.org/img/wn/${data?.weather[0].icon}@4x.png`} alt={data?.weather[0].description} />
         <Temperature>{data?.main.temp}°C</Temperature>
@@ -74,5 +75,6 @@ export default function WeatherWidget() {
         <Data>Pressure: {data?.main.pressure} hPa</Data>
       </DataWrapper>
     </Wrapper>
+    }
   </div>
 }

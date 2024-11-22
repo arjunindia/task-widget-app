@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import WidgetWrapper from './components/WidgetWrapper'
 import WeatherWidget from './components/widgets/WeatherWidget'
+import TaskWidget from './components/widgets/TaskWidget'
 
 const Header = styled.header`
   height: 5em;
@@ -46,7 +47,7 @@ function App() {
             <WeatherWidget />
           </WidgetWrapper>
           <WidgetWrapper>
-            <WeatherWidget />
+            <TaskWidget />
           </WidgetWrapper>
         </Content>
       </Shell>
