@@ -26,7 +26,8 @@ const Sidebar = styled.aside<{ enabled: boolean }>`
   @media (max-width: 665px) {
     min-height: 100vh;
     display: ${({ enabled }) => enabled ? 'flex' : 'none'};
-    position: ${({ enabled }) => enabled ? 'absolute' : 'none'};
+    position: ${({ enabled }) => enabled ? 'fixed' : 'none'};
+    
     z-index: 1;
     top: 0;
     left: 0;

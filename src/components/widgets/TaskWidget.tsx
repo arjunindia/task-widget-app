@@ -125,12 +125,16 @@ const ListItem = ({ id, title, completed }: { id: number, title: string, complet
 export default function TaskWidget() {
   const { data, isLoading } = useTodos()
   const [newTodo, setNewTodo] = useState('')
+  const handleAddTodo = () => {
+    addTodo(newTodo)
+    setNewTodo('')
+  }
   return <div>
     <TitleWrapper>
       <Title>Tasks</Title>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1em', position: 'relative' }}>
         <TodoInput placeholder="New task" value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
-        <AddButton onClick={() => addTodo(newTodo)}><Plus size={20} /></AddButton>
+        <AddButton onClick={handleAddTodo}><Plus size={20} /></AddButton>
       </div>
     </TitleWrapper>
     <List>
