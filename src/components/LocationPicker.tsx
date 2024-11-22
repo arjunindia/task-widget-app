@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useLocation } from '../lib/location'
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import useLocationStore from '../lib/stores/location'
 
 const LocationPickerStyled = styled.input`
@@ -45,6 +45,7 @@ export default function LocationPicker() {
       setFocused(true)
     }
     const setBlur = () => {
+      // if the list is hovered, then don't close the dropdown, because the user is still interacting with it, and if the user clicks it would close it without selecting anything
       if (listRef.current?.matches(":hover")) {
         return
       }
@@ -61,35 +62,42 @@ export default function LocationPicker() {
       }
     }
   }, [])
+
+  // Handles things like pressing enter, tab, arrow keys etc in the search box
+  const handleKeyDown =
+    useCallback(
+      (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setFocused(false)
+        }
+        if (e.key === 'Enter') {
+          setFocused(false)
+          if (!uniqueResults || uniqueResults.length === 0) return
+          setValue(uniqueResults[selected].name)
+          setLocation(uniqueResults[selected].name)
+          setLatLong(uniqueResults[selected].latitude, uniqueResults[selected].longitude)
+          ref.current?.blur()
+        }
+        if (e.key === "Tab") {
+          setFocused(false)
+          if (!uniqueResults || uniqueResults.length === 0) return
+          console.log(uniqueResults[selected])
+          setValue(uniqueResults[selected].name)
+          setLocation(uniqueResults[selected].name)
+          setLatLong(uniqueResults[selected].latitude, uniqueResults[selected].longitude)
+          ref.current?.blur()
+        }
+        if (e.key === "ArrowDown") {
+          setSelected((selected) => { if (selected < 5) return selected + 1; return selected })
+        }
+        if (e.key === "ArrowUp") {
+          setSelected((selected) => { if (selected > 0) return selected - 1; return selected })
+        }
+      },
+      [selected]
+    )
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setFocused(false)
-      }
-      if (e.key === 'Enter') {
-        setFocused(false)
-        if (!uniqueResults || uniqueResults.length === 0) return
-        setValue(uniqueResults[selected].name)
-        setLocation(uniqueResults[selected].name)
-        setLatLong(uniqueResults[selected].latitude, uniqueResults[selected].longitude)
-        ref.current?.blur()
-      }
-      if (e.key === "Tab") {
-        setFocused(false)
-        if (!uniqueResults || uniqueResults.length === 0) return
-        console.log(uniqueResults[selected])
-        setValue(uniqueResults[selected].name)
-        setLocation(uniqueResults[selected].name)
-        setLatLong(uniqueResults[selected].latitude, uniqueResults[selected].longitude)
-        ref.current?.blur()
-      }
-      if (e.key === "ArrowDown") {
-        setSelected((selected) => { if (selected < 5) return selected + 1; return selected })
-      }
-      if (e.key === "ArrowUp") {
-        setSelected((selected) => { if (selected > 0) return selected - 1; return selected })
-      }
-    }
+
     ref.current?.addEventListener('keydown', handleKeyDown)
     return () => {
       ref.current?.removeEventListener('keydown', handleKeyDown)
