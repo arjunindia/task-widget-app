@@ -8,6 +8,12 @@ const TitleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1em;
+  @media (max-width: 665px) {
+    flex-direction: column;
+    align-items: start;
+    gap: 0.5em;
+    max-width: 100%;
+  }
 `
 const Title = styled.h1`
   font-size: 2em;
@@ -21,10 +27,15 @@ const AddButton = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.border};
   border-radius: 0.5em;
   box-shadow: 2px 2px 0 0 ${({ theme }) => theme.colors.shadow};
-  font-size: 1em;
   padding: 0.5em;
   &:hover {
     background: ${({ theme }) => theme.colors.hoverSecondary};
+  }
+  @media (max-width: 665px) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
   }
 
 `
@@ -34,6 +45,7 @@ const TodoInput = styled.input`
   box-shadow: 2px 2px 0 0 ${({ theme }) => theme.colors.shadow};
   font-size: 1em;
   padding: 0.5em;
+  max-width: 60vw;
 `
 
 const List = styled.ul`
@@ -56,6 +68,11 @@ const Item = styled.li`
   align-items: center;
   justify-content: start;
   gap: 1em;
+  @media (max-width: 400px) {
+    flex-direction: column;
+    align-items: start;
+    gap: 0.5em;
+  }
   &:hover {
     background-color: ${(props) => props.theme.colors.hoverSecondary};
   }
@@ -110,7 +127,7 @@ export default function TaskWidget() {
   return <div>
     <TitleWrapper>
       <Title>Tasks</Title>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1em', position: 'relative' }}>
         <TodoInput placeholder="New task" value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
         <AddButton onClick={() => addTodo(newTodo)}><Plus size={20} /></AddButton>
       </div>
