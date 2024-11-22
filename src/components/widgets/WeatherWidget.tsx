@@ -55,6 +55,10 @@ const DataWrapper = styled.div`
   justify-self: center;
   height: 100%;
   gap: 1em;
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
+    gap: 0.5em;
+  }
 `
 const Data = styled.div`
   font-size: 1.2em;

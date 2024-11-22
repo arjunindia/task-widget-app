@@ -87,6 +87,7 @@ const NotCompleted = styled.span`
 
 const Checkbox = styled.input`
   margin-right: 0.5em;
+  transform: scale(1.5);
 `
 const IconWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.danger};

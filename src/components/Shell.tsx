@@ -4,6 +4,7 @@ import WeatherWidget from './widgets/WeatherWidget'
 import TaskWidget from './widgets/TaskWidget'
 import { CloudSun, CalendarCheck } from '@phosphor-icons/react'
 import React, { useCallback } from 'react'
+import useSidebarStore from "../lib/stores/sidebar"
 
 const ShellWrapper = styled.div`
   height: calc(100% - 5em);
@@ -12,8 +13,8 @@ const ShellWrapper = styled.div`
 `
 
 
-const Sidebar = styled.aside`
-  height: 100%;
+const Sidebar = styled.aside<{ enabled: boolean }>`
+  min-height: 84.5vh;
   width: 5em;
   background-color: ${(props) => props.theme.colors.secondary};
   display: flex;
@@ -23,13 +24,14 @@ const Sidebar = styled.aside`
   padding: 2em 0;
   gap: 2em;
   @media (max-width: 665px) {
-    position: absolute;
+    min-height: 100vh;
+    display: ${({ enabled }) => enabled ? 'flex' : 'none'};
+    position: ${({ enabled }) => enabled ? 'absolute' : 'none'};
     z-index: 1;
     top: 0;
     left: 0;
     height: 100%;
     background-color: ${(props) => props.theme.colors.secondary};
-    display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
@@ -56,7 +58,7 @@ const Content = styled.main`
 
 // if enabled, then the button background is the background color else it is the hover color
 const WidgetButton = styled.button<{ enabled: boolean }>`
-  background: ${({ theme, enabled }) => enabled ? theme.colors.background : theme.colors.hoverSecondary};
+  background: ${({ theme, enabled }) => enabled ? theme.colors.background : theme.colors.hover};
   
   border: 2px solid ${({ theme }) => theme.colors.border};
   border-radius: 0.5em;
@@ -92,6 +94,7 @@ const WidgetList: WidgetItem[] = [
 
 
 const Shell = () => {
+  const sidebarEnabled = useSidebarStore((state) => state.sidebarEnabled)
   const [enabledList, setEnabledList] = React.useState<boolean[]>(Array(WidgetList.length).fill(true))
 
   const toggleWidget = useCallback((id: number) => {
@@ -104,7 +107,7 @@ const Shell = () => {
 
   console.log(enabledList)
   return <ShellWrapper >
-    <Sidebar>
+    <Sidebar enabled={sidebarEnabled}>
       {WidgetList.map((widget) => (
         <WidgetButton key={widget.id} onClick={() => toggleWidget(widget.id)} enabled={enabledList[widget.id - 1]} title={`Toggle ${widget.name}`}>
           {widget.logo}
