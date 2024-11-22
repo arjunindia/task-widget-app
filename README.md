@@ -26,7 +26,7 @@ npm install
 3. Create a `.env` file in the root directory and add your OpenWeatherMap API key:
 
 ```bash
-VITE_OMW_API_KEY=your_api_key
+VITE_OWM_API_KEY=your_api_key
 ```
 you can refer the .env.example file.
 to get your api key, you can refer this link: [https://home.openweathermap.org/api_keys](https://home.openweathermap.org/api_keys)
