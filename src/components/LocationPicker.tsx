@@ -18,7 +18,6 @@ const SearchList = styled.ul`
   margin-top: 0.5em;
   border-radius: 0.25em;
   border: 2px solid ${(props) => props.theme.colors.border};
-  background-color: ${(props) => props.theme.colors.background};
   box-shadow: 0 2px 0 0 ${(props) => props.theme.colors.shadow};
 `
 

@@ -91,9 +91,6 @@ const ListItem = ({ id, title, completed }: { id: number, title: string, complet
   const handleClick = () => {
     setChecked(!checked)
   }
-  const handleUpdate = (title: string) => {
-    updateTodo(id, title, checked)
-  }
   useEffect(() => {
     updateTodo(id, title, checked)
   }, [checked])

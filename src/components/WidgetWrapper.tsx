@@ -9,6 +9,7 @@ const Container = styled.div`
   width: 100%;
 `
 
-export default function WidgetWrapper({ children }: { children: React.ReactNode }) {
+export default function WidgetWrapper({ children, enabled }: { children: React.ReactNode, enabled: boolean }) {
+  if (!enabled) return null
   return <Container>{children}</Container>
 }
